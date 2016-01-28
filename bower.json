@@ -1,9 +1,9 @@
 {
-  "name": "angular-seed",
-  "description": "A starter project for AngularJS",
+  "name": "lastfm-data-vis",
+  "description": "A sample app using Angular JS and D3 to display statistics from LastFM",
   "version": "0.0.0",
-  "homepage": "https://github.com/angular/angular-seed",
-  "license": "MIT",
+  "homepage": "https://github.com/melmason128/lastfm-data-vis",
+  "license": "",
   "private": true,
   "dependencies": {
     "angular": "~1.4.0",

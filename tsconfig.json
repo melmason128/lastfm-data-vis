@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "removeComments": true,
+    "sourceMap": true
+  },
+  "files": [
+    "app/app.ts",
+    "typings/browser.d.ts"
+  ]
+}
