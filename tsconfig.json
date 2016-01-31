@@ -5,6 +5,8 @@
   },
   "files": [
     "app/app.ts",
+    "app/dashboard/dashboard.controller.ts",
+    "e2e-tests/scenarios.ts",
     "typings/browser.d.ts"
   ]
 }
