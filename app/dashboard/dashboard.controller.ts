@@ -5,8 +5,16 @@ module LastFMDataVis.Dashboard {
 
     export class DashboardController {
 
-        constructor(){
+        constructor(private lastFmService : Data.ILastFMService){
+            this.getArtists();
+        }
 
+        artists = [];
+
+        getArtists(){
+            this.lastFmService.getTopArtists().then((newArtists : Data.Artist[])=>{
+                this.artists = newArtists;
+            });
         }
 
     }
