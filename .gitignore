@@ -6,3 +6,4 @@ tmp
 .DS_Store
 .idea
 *.js.map
+app/all.min.js

@@ -1,6 +1,3 @@
-/**
- * Created by Mel on 31/01/2016.
- */
 /* https://github.com/angular/protractor/blob/master/docs/toc.md */
 
 describe('LastFMDataVis', ()=> {

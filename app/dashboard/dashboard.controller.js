@@ -1,3 +1,6 @@
+/**
+ * Displays data from LastFM
+ */
 var LastFMDataVis;
 (function (LastFMDataVis) {
     var Dashboard;

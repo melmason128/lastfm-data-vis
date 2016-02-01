@@ -1,3 +1,4 @@
+/* https://github.com/angular/protractor/blob/master/docs/toc.md */
 describe('LastFMDataVis', function () {
     it('should redirect to /dashboard by default', function () {
         browser.get('index.html');

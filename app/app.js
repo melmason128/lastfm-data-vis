@@ -1,5 +1,6 @@
 var LastFMDataVis;
 (function (LastFMDataVis) {
+    // Declare app level module which depends on views, and components
     angular.module('lastFMDataVisApp', [
         'ngRoute',
         'myApp.version'
