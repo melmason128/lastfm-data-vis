@@ -9,12 +9,19 @@ var LastFMDataVis;
             function DashboardController(lastFmService) {
                 this.lastFmService = lastFmService;
                 this.artists = [];
+                this.datapoints = [];
                 this.getArtists();
             }
             DashboardController.prototype.getArtists = function () {
                 var _this = this;
                 this.lastFmService.getTopArtists().then(function (newArtists) {
                     _this.artists = newArtists;
+                    _this.datapoints = _this.artists.map(function (a) {
+                        {
+                            //TODO: check artists are ordered by playcount, not listeners in the last fm order
+                            return { label: a.name, value: a.playcount };
+                        }
+                    });
                 });
             };
             return DashboardController;

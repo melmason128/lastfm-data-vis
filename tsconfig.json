@@ -8,6 +8,8 @@
     "app/dashboard/dashboard.controller.ts",
     "app/components/data/data.service.ts",
     "app/components/data/data.service.spec.ts",
+    "app/components/barchart/barchart.directive.ts",
+    "app/components/barchart/barchart.directive.spec.ts",
     "e2e-tests/scenarios.ts",
     "typings/browser.d.ts"
   ]

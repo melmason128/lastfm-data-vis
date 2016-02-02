@@ -28,3 +28,8 @@
   content: "";
   padding: 0;
 }
+
+/*TODO: scope and do more styling*/
+.bar{
+  fill: steelblue;
+}

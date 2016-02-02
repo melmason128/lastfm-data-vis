@@ -3,7 +3,8 @@ var LastFMDataVis;
     // Declare app level module which depends on views, and components
     angular.module('lastFMDataVisApp', [
         'ngRoute',
-        'myApp.version'
+        'myApp.version',
+        'lastFMDataVisApp.barchart'
     ])
         .constant('lastFmApiKey', '53a22d9927d21c4cd94b6a4ed4c383e2')
         .constant('lastFmApiBaseUrl', 'http://ws.audioscrobbler.com/2.0/')

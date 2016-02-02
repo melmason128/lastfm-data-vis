@@ -1,13 +1,6 @@
 <div ng-controller="dashboardController as dbCtrl">
 <h3>Dashboard</h3>
 
-    <!--TODO: remove once we have proper display for the artists-->
-    <ul>
-        <li ng-repeat="artist in dbCtrl.artists">
-            {{artist.name}}
-        </li>
-    </ul>
-
-<!--TODO: pie chart directive-->
+    <ldv-barchart ldv-data-set="dbCtrl.datapoints"></ldv-barchart>
 
 </div>
