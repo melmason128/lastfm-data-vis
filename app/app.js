@@ -10,11 +10,8 @@ var LastFMDataVis;
         .factory('lastFmService', function ($http, lastFmApiBaseUrl, lastFmApiKey) {
         return new LastFMDataVis.Data.LastFMService($http, lastFmApiBaseUrl, lastFmApiKey);
     })
-        .factory('mockLastFmService', function ($q) {
-        return new LastFMDataVis.Data.MockLastFMService($q);
-    })
-        .controller('dashboardController', function (mockLastFmService) {
-        return new LastFMDataVis.Dashboard.DashboardController(mockLastFmService);
+        .controller('dashboardController', function (lastFmService) {
+        return new LastFMDataVis.Dashboard.DashboardController(lastFmService);
     })
         .config(['$routeProvider', function ($routeProvider) {
             $routeProvider

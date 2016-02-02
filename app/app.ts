@@ -14,14 +14,13 @@ module LastFMDataVis {
     .factory('lastFmService', function($http, lastFmApiBaseUrl, lastFmApiKey){
         return new Data.LastFMService($http, lastFmApiBaseUrl, lastFmApiKey);
     })
-    //TODO: remove once lastfm is running again
-    .factory('mockLastFmService', function($q){
-        return new Data.MockLastFMService($q);
-    })
+        
+    //.factory('mockLastFmService', function($q){
+    //    return new Data.MockLastFMService($q);
+    //})
 
-    //TODO: change back to real service once lastfm is running again
-    .controller('dashboardController', function(mockLastFmService) {
-        return new Dashboard.DashboardController(mockLastFmService);
+    .controller('dashboardController', function(lastFmService) {
+        return new Dashboard.DashboardController(lastFmService);
     })
 
     //Routing
