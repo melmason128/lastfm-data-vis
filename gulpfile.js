@@ -1,6 +1,7 @@
 var gulp = require('gulp');
 var watch = require('gulp-watch');
 var concat = require('gulp-concat');
+var stripDebug = require('gulp-strip-debug');
 var ngAnnotate = require('gulp-ng-annotate');
 var uglify = require('gulp-uglify');
 var del = require('del');
@@ -20,6 +21,7 @@ gulp.task('scripts', ['clean-scripts'], function(){
         //annotate before minification.
         //Currently the tsconfig retains comments when compiling to js (i.e. the /** @ngInject */ should remain)
         .pipe(ngAnnotate({add: true}))
+        .pipe(stripDebug())
         .pipe(uglify())
         .pipe(gulp.dest('app/'));
 });
