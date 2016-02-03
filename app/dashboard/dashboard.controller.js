@@ -8,13 +8,14 @@ var LastFMDataVis;
         var DashboardController = (function () {
             function DashboardController(lastFmService) {
                 this.lastFmService = lastFmService;
+                this.artistsLimit = 20;
                 this.artists = [];
                 this.datapoints = [];
                 this.getArtists();
             }
             DashboardController.prototype.getArtists = function () {
                 var _this = this;
-                this.lastFmService.getTopArtists().then(function (newArtists) {
+                this.lastFmService.getTopArtists(this.artistsLimit).then(function (newArtists) {
                     _this.artists = newArtists;
                     _this.datapoints = _this.artists.map(function (a) {
                         {

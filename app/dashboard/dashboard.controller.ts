@@ -6,6 +6,8 @@ module LastFMDataVis.Dashboard {
     import Artist = LastFMDataVis.Data.Artist;
     export class DashboardController {
 
+        private artistsLimit = 20;
+
         constructor(private lastFmService : Data.ILastFMService){
             this.getArtists();
         }
@@ -14,7 +16,7 @@ module LastFMDataVis.Dashboard {
         datapoints : Barchart.IDatapoint[] = [];
 
         getArtists(){
-            this.lastFmService.getTopArtists().then((newArtists : Data.Artist[])=>{
+            this.lastFmService.getTopArtists(this.artistsLimit).then((newArtists : Data.Artist[])=>{
                 this.artists = newArtists;
                 this.datapoints = this.artists.map((a)=>{
                     {

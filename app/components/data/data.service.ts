@@ -1,7 +1,7 @@
 module LastFMDataVis.Data {
 
     export interface ILastFMService {
-        getTopArtists() : ng.IPromise<Artist[]>;
+        getTopArtists(limit?: number) : ng.IPromise<Artist[]>;
     }
 
     export class LastFMService implements ILastFMService{
@@ -12,8 +12,12 @@ module LastFMDataVis.Data {
         }
 
         //TODO: put in a limit to the number of artists returned
-        getTopArtists: () => ng.IPromise<Artist[]> = () => {
-            return this.getJsonData(this.getUrl('chart.getTopArtists'))
+        getTopArtists: (limit?: number) => ng.IPromise<Artist[]> = (limit?: number) => {
+            var limitFilter;
+            if (typeof limit !== 'undefined'){
+                limitFilter = 'limit='+limit;
+            }
+            return this.getJsonData(this.getUrl('chart.getTopArtists',limitFilter))
                 .then((result : any)=>{
                     var artists = result.data.artists.artist;
                     artists.forEach((a)=>{
@@ -60,7 +64,7 @@ module LastFMDataVis.Data {
 
         }
 
-        getTopArtists: () => ng.IPromise<Artist[]> = () => {
+        getTopArtists = (limit?: number) => {
             //returns static data cut from a lastfm call
             return this.$q.when([{"name":"David Bowie","playcount":153472285,"listeners":4116353,"mbid":"5441c29d-3602-4898-b1a1-b77fa23b8e50","url":"http://www.last.fm/music/David+Bowie","streamable":"0"},
                 {"name":"Coldplay","playcount":322733687,"listeners":6295832,"mbid":"cc197bad-dc9c-440d-a5b5-d52ba2e14234","url":"http://www.last.fm/music/Coldplay","streamable":"0"},

@@ -9,8 +9,12 @@ var LastFMDataVis;
                 this.lastFMBaseUrl = lastFMBaseUrl;
                 this.apiKey = apiKey;
                 //TODO: put in a limit to the number of artists returned
-                this.getTopArtists = function () {
-                    return _this.getJsonData(_this.getUrl('chart.getTopArtists'))
+                this.getTopArtists = function (limit) {
+                    var limitFilter;
+                    if (typeof limit !== 'undefined') {
+                        limitFilter = 'limit=' + limit;
+                    }
+                    return _this.getJsonData(_this.getUrl('chart.getTopArtists', limitFilter))
                         .then(function (result) {
                         var artists = result.data.artists.artist;
                         artists.forEach(function (a) {
@@ -45,7 +49,7 @@ var LastFMDataVis;
             function MockLastFMService($q) {
                 var _this = this;
                 this.$q = $q;
-                this.getTopArtists = function () {
+                this.getTopArtists = function (limit) {
                     //returns static data cut from a lastfm call
                     return _this.$q.when([{ "name": "David Bowie", "playcount": 153472285, "listeners": 4116353, "mbid": "5441c29d-3602-4898-b1a1-b77fa23b8e50", "url": "http://www.last.fm/music/David+Bowie", "streamable": "0" },
                         { "name": "Coldplay", "playcount": 322733687, "listeners": 6295832, "mbid": "cc197bad-dc9c-440d-a5b5-d52ba2e14234", "url": "http://www.last.fm/music/Coldplay", "streamable": "0" },
