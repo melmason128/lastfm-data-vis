@@ -21,7 +21,8 @@ module LastFMDataVis.Dashboard {
                 this.datapoints = this.artists.map((a)=>{
                     {
                         //TODO: check artists are ordered by playcount, not listeners in the last fm order
-                        return {label: a.name, value: a.playcount};
+                        //TODO: add appropriate onclick event
+                        return {label: a.name, value: a.playcount, onclick: ()=>{}};
                     }
                 });
             });

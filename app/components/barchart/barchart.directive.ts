@@ -110,12 +110,12 @@ module LastFMDataVis.Barchart{
                     //update
                     var bars = chartEle.selectAll('.bar')
                         .data(dataSet)
-                        .on('click', (d:IDatapoint)=>d.onclick)
+                        .on('click', (d:IDatapoint)=>d.onclick())
                         .attr('width',(d:IDatapoint)=>xScale(d.value));
 
                     bars.enter().append('rect')
                             .attr('width',(d:IDatapoint)=> xScale(d.value))
-                            .on('click', (d:IDatapoint)=>d.onclick)
+                            .on('click', (d:IDatapoint)=>d.onclick())
                             .attr('class','bar')
                             .attr('height',yScale.rangeBand())
                             .attr('x', 0)
@@ -126,10 +126,12 @@ module LastFMDataVis.Barchart{
 
                     var barLabels = chartEle.selectAll('.bar-label')
                         .data(dataSet)
+                        .on('click', (d:IDatapoint)=>d.onclick())
                         .text((d: IDatapoint)=>d.label);
 
                     barLabels.enter().append('text')
                         .text((d: IDatapoint)=>d.label)
+                        .on('click', (d:IDatapoint)=>d.onclick())
                         .attr('class','bar-label')
                         .attr('height',yScale.rangeBand())
                         .attr('x', 0)

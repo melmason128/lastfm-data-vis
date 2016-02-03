@@ -76,11 +76,11 @@ var LastFMDataVis;
                         //update
                         var bars = chartEle.selectAll('.bar')
                             .data(dataSet)
-                            .on('click', function (d) { return d.onclick; })
+                            .on('click', function (d) { return d.onclick(); })
                             .attr('width', function (d) { return xScale(d.value); });
                         bars.enter().append('rect')
                             .attr('width', function (d) { return xScale(d.value); })
-                            .on('click', function (d) { return d.onclick; })
+                            .on('click', function (d) { return d.onclick(); })
                             .attr('class', 'bar')
                             .attr('height', yScale.rangeBand())
                             .attr('x', 0)
@@ -89,9 +89,11 @@ var LastFMDataVis;
                         bars.exit().remove();
                         var barLabels = chartEle.selectAll('.bar-label')
                             .data(dataSet)
+                            .on('click', function (d) { return d.onclick(); })
                             .text(function (d) { return d.label; });
                         barLabels.enter().append('text')
                             .text(function (d) { return d.label; })
+                            .on('click', function (d) { return d.onclick(); })
                             .attr('class', 'bar-label')
                             .attr('height', yScale.rangeBand())
                             .attr('x', 0)
