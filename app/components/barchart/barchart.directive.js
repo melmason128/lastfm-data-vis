@@ -52,17 +52,24 @@ var LastFMDataVis;
                             .range([0, chartWidth]);
                         var yScale = d3.scale.ordinal()
                             .domain(dataSet.map(function (d) { return d.label; }))
-                            .rangeRoundBands([0, totalBarsHeight], 0.1);
+                            .rangeRoundBands([0, totalBarsHeight], 0);
                         //axes
                         var xAxis = d3.svg.axis()
                             .scale(xScale)
                             .orient('bottom')
-                            .ticks(10).tickSize(6, 6);
+                            .ticks(10);
                         chartEle.append("g")
                             .attr("class", "x-axis axis")
                             .attr("transform", "translate(0," + totalBarsHeight + ")")
                             .call(xAxis);
-                        //TODO: yAxis?
+                        var yAxis = d3.svg.axis()
+                            .scale(yScale)
+                            .orient('left')
+                            .tickFormat('')
+                            .ticks(0);
+                        chartEle.append("g")
+                            .attr("class", "y-axis axis")
+                            .call(yAxis);
                         //render bars
                         //update
                         var bars = chartEle.selectAll('.bar')
