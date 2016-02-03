@@ -35,6 +35,23 @@ module LastFMDataVis.Barchart{
                 svgEle.style('width','100%');
 
 
+                //TODO: move to binding
+                var unit = 'plays';
+
+                //TODO: define these settings elsewhere?
+                //Settings
+                var margin = {top: 5, left: 20, right: 20, bottom:5};
+                var barHeight = 25;
+                var xAxisLabelWidth = 120;
+                var xAxisHeight = 35;
+                //Fallback in case width is undefined. Only seems to happen in testing
+                var defaultWidth = 300;
+                var minimumWidth = 100;
+
+                //colours
+                var colour = d3.scale.category20();
+
+
                 var render = (dataSet : IDatapoint[]) => {
 
                     //if the dataSet is undefined or empty, return
@@ -42,27 +59,13 @@ module LastFMDataVis.Barchart{
                         return;
                     }
 
-                    //TODO: move to binding
-                    var unit = 'plays';
-
-                    //TODO: define these settings elsewhere?
-                    //Settings
-                    var margin = {top: 5, left: 20, right: 20, bottom:5};
-                    var barHeight = 25;
-                    var axisHeight = 35;
-                    //Fallback in case width is undefined. Only seems to happen in testing
-                    var defaultWidth = 300;
-                    var minimumWidth = 100;
-
-
-                    //TODO: error handling when width is < margins
                     var svgEleWidth = parseFloat(svgEle.style('width'));
                     if (isNaN(svgEleWidth)){
                         svgEleWidth = defaultWidth;
                     }
                     var chartWidth = Math.max(minimumWidth, svgEleWidth - margin.left - margin.right);
                     var totalBarsHeight = barHeight*dataSet.length;
-                    var chartHeight = totalBarsHeight + axisHeight;
+                    var chartHeight = totalBarsHeight + xAxisHeight;
 
                     var chartEle = svgEle
                         .attr('height', chartHeight + margin.top + margin.bottom)
@@ -83,7 +86,7 @@ module LastFMDataVis.Barchart{
                     var xAxis = d3.svg.axis()
                         .scale(xScale)
                     .orient('bottom')
-                    .ticks(10);
+                    .ticks(Math.max(2, Math.round(chartWidth/xAxisLabelWidth)));
 
                     chartEle.append("g")
                         .attr("class", "x-axis axis")
@@ -103,7 +106,6 @@ module LastFMDataVis.Barchart{
 
 
 
-
                     //render bars
                     //update
                     var bars = chartEle.selectAll('.bar')
@@ -111,15 +113,15 @@ module LastFMDataVis.Barchart{
                         .on('click', (d:IDatapoint)=>d.onclick)
                         .attr('width',(d:IDatapoint)=>xScale(d.value));
 
-                    //TODO: different colour for each bar
                     bars.enter().append('rect')
-                            .text((d: IDatapoint)=>d.label)
+                            .attr('width',(d:IDatapoint)=> xScale(d.value))
                             .on('click', (d:IDatapoint)=>d.onclick)
                             .attr('class','bar')
                             .attr('height',yScale.rangeBand())
                             .attr('x', 0)
                             .attr('y', (d) => yScale(d.label))
-                            .attr('width',(d:IDatapoint)=> xScale(d.value));
+                            .attr('fill',(d)=> colour(d.label));
+
                     bars.exit().remove();
 
                     var barLabels = chartEle.selectAll('.bar-label')

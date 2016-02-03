@@ -18,29 +18,31 @@ var LastFMDataVis;
                         .append('svg');
                     //TODO can this be moved to css?
                     svgEle.style('width', '100%');
+                    //TODO: move to binding
+                    var unit = 'plays';
+                    //TODO: define these settings elsewhere?
+                    //Settings
+                    var margin = { top: 5, left: 20, right: 20, bottom: 5 };
+                    var barHeight = 25;
+                    var xAxisLabelWidth = 120;
+                    var xAxisHeight = 35;
+                    //Fallback in case width is undefined. Only seems to happen in testing
+                    var defaultWidth = 300;
+                    var minimumWidth = 100;
+                    //colours
+                    var colour = d3.scale.category20();
                     var render = function (dataSet) {
                         //if the dataSet is undefined or empty, return
                         if (!dataSet || dataSet.length === 0) {
                             return;
                         }
-                        //TODO: move to binding
-                        var unit = 'plays';
-                        //TODO: define these settings elsewhere?
-                        //Settings
-                        var margin = { top: 5, left: 20, right: 20, bottom: 5 };
-                        var barHeight = 25;
-                        var axisHeight = 35;
-                        //Fallback in case width is undefined. Only seems to happen in testing
-                        var defaultWidth = 300;
-                        var minimumWidth = 100;
-                        //TODO: error handling when width is < margins
                         var svgEleWidth = parseFloat(svgEle.style('width'));
                         if (isNaN(svgEleWidth)) {
                             svgEleWidth = defaultWidth;
                         }
                         var chartWidth = Math.max(minimumWidth, svgEleWidth - margin.left - margin.right);
                         var totalBarsHeight = barHeight * dataSet.length;
-                        var chartHeight = totalBarsHeight + axisHeight;
+                        var chartHeight = totalBarsHeight + xAxisHeight;
                         var chartEle = svgEle
                             .attr('height', chartHeight + margin.top + margin.bottom)
                             .attr('width', chartWidth + margin.left + margin.right)
@@ -57,7 +59,7 @@ var LastFMDataVis;
                         var xAxis = d3.svg.axis()
                             .scale(xScale)
                             .orient('bottom')
-                            .ticks(10);
+                            .ticks(Math.max(2, Math.round(chartWidth / xAxisLabelWidth)));
                         chartEle.append("g")
                             .attr("class", "x-axis axis")
                             .attr("transform", "translate(0," + totalBarsHeight + ")")
@@ -76,15 +78,14 @@ var LastFMDataVis;
                             .data(dataSet)
                             .on('click', function (d) { return d.onclick; })
                             .attr('width', function (d) { return xScale(d.value); });
-                        //TODO: different colour for each bar
                         bars.enter().append('rect')
-                            .text(function (d) { return d.label; })
+                            .attr('width', function (d) { return xScale(d.value); })
                             .on('click', function (d) { return d.onclick; })
                             .attr('class', 'bar')
                             .attr('height', yScale.rangeBand())
                             .attr('x', 0)
                             .attr('y', function (d) { return yScale(d.label); })
-                            .attr('width', function (d) { return xScale(d.value); });
+                            .attr('fill', function (d) { return colour(d.label); });
                         bars.exit().remove();
                         var barLabels = chartEle.selectAll('.bar-label')
                             .data(dataSet)
