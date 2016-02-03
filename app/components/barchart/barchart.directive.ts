@@ -48,20 +48,21 @@ module LastFMDataVis.Barchart{
                     //TODO: define these settings elsewhere?
                     //Settings
                     var margin = {top: 5, left: 20, right: 20, bottom:5};
-                    var barHeight = 20;
+                    var barHeight = 25;
+                    var axisHeight = 35;
+                    //Fallback in case width is undefined. Only seems to happen in testing
                     var defaultWidth = 300;
                     var minimumWidth = 100;
 
 
                     //TODO: error handling when width is < margins
                     var svgEleWidth = parseFloat(svgEle.style('width'));
-                    //Fallback in case width is undefined. Only seems to happen in testing
                     if (isNaN(svgEleWidth)){
                         svgEleWidth = defaultWidth;
                     }
                     var chartWidth = Math.max(minimumWidth, svgEleWidth - margin.left - margin.right);
-                    //TODO: include axis height?
-                    var chartHeight = barHeight*dataSet.length;
+                    var totalBarsHeight = barHeight*dataSet.length;
+                    var chartHeight = totalBarsHeight + axisHeight;
 
                     var chartEle = svgEle
                         .attr('height', chartHeight + margin.top + margin.bottom)
@@ -76,16 +77,24 @@ module LastFMDataVis.Barchart{
 
                     var yScale = d3.scale.ordinal()
                         .domain(dataSet.map((d)=>d.label))
-                        .rangeRoundBands([0,chartHeight],0.1);
+                        .rangeRoundBands([0,totalBarsHeight],0.1);
 
                     //axes
-                    //TODO: add to chart
                     var xAxis = d3.svg.axis()
                         .scale(xScale)
                     .orient('bottom')
-                    .ticks(10,unit);
+                    .ticks(10).tickSize(6,6);
+
+                    chartEle.append("g")
+                        .attr("class", "x-axis axis")
+                        .attr("transform", `translate(0,${totalBarsHeight})`)
+                        .call(xAxis);
+
 
                     //TODO: yAxis?
+
+
+
 
                     //render bars
                     //update
