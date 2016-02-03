@@ -1,7 +1,7 @@
 describe('LastFMDataVis', function () {
     describe('barchart directive', function () {
         var scope;
-        var template = '<ldv-barchart ldv-data-set="data"></ldv-barchart>';
+        var template = '<div style="width:300px"><ldv-barchart ldv-data-set="data"></ldv-barchart></div>';
         var defaultDataSet;
         var getDirective;
         beforeEach(function () { angular.mock.module('lastFMDataVisApp'); });

@@ -4,13 +4,13 @@ import IDatapoint = LastFMDataVis.Barchart.IDatapoint;
 import IDirective = angular.IDirective;
 import IAugmentedJQuery = angular.IAugmentedJQuery;
 
-describe('LastFMDataVis',()=> {
+describe('LastFMDataVis',() => {
 
 
     describe('barchart directive', ()=> {
 
         var scope;
-        var template = '<ldv-barchart ldv-data-set="data"></ldv-barchart>';
+        var template = '<div style="width:300px"><ldv-barchart ldv-data-set="data"></ldv-barchart></div>';
         var defaultDataSet : IDatapoint[];
         var getDirective: (data?: IDatapoint[]) => IAugmentedJQuery;
 
@@ -18,7 +18,7 @@ describe('LastFMDataVis',()=> {
 
         beforeEach(inject(($compile, $rootScope)=> {
 
-            getDirective = (data?:IDatapoint[])=> {
+            getDirective = ( data?:IDatapoint[])=> {
 
                 defaultDataSet = [
                     {label: 'point1', value: 35},
@@ -50,7 +50,7 @@ describe('LastFMDataVis',()=> {
             //ratio between two bar widths and two data values should be same
             expect(parseFloat(bars[0].getAttribute('width'))/parseFloat(bars[1].getAttribute('width')))
                 .toBe(defaultDataSet[0].value/defaultDataSet[1].value);
-        })
+        });
 
         it('should show a label per datapoint', ()=>{
             var ele : IAugmentedJQuery = getDirective();

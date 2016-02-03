@@ -32,6 +32,10 @@ describe('LastFMDataVis', function () {
                         expect(artists.length).toBeGreaterThan(4);
                         expect(artists[0].name).toBeTruthy();
                         expect(artists[0].mbid).toBeTruthy();
+                        expect(artists[0].listeners).toBeTruthy();
+                        expect(artists[0].playcount).toBeTruthy();
+                        expect(typeof artists[0].listeners).toBe('number');
+                        expect(typeof artists[0].playcount).toBe('number');
                     }, function (error) { fail(error); });
                     //$httpBackend makes these calls synchronous, so done() is unnecessary and can cause digest conflicts
                     _$httpBackend.flush();

@@ -12,7 +12,12 @@ var LastFMDataVis;
                 this.getTopArtists = function () {
                     return _this.getJsonData(_this.getUrl('chart.getTopArtists'))
                         .then(function (result) {
-                        return result.data.artists.artist;
+                        var artists = result.data.artists.artist;
+                        artists.forEach(function (a) {
+                            a.playcount = parseInt(a.playcount);
+                            a.listeners = parseInt(a.listeners);
+                        });
+                        return artists;
                     });
                 };
                 this.getUrl = function (method, extraParameters) {
@@ -22,6 +27,7 @@ var LastFMDataVis;
                     }
                     return url;
                 };
+                //the angular.fromJson method will keep string numbers as strings - make sure to parse them later
                 this.getJsonData = function (url) {
                     return _this.$http.get(url)
                         .success(function (result) {
